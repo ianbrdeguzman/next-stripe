@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import useCart from '../hooks/useCart';
 import getAllProducts from '../lib/getAllProducts';
 
 export interface ProductData {
@@ -10,6 +11,8 @@ export interface ProductData {
 }
 
 export default function Home({ products }: { products: ProductData[] }) {
+  const { cart, addItemToCart } = useCart();
+  console.log(cart);
   return (
     <div>
       <Head>
@@ -30,6 +33,13 @@ export default function Home({ products }: { products: ProductData[] }) {
                 <p>${p.price / 100}</p>
               </a>
             </Link>
+            <button
+              type="button"
+              className="border p-1 rounded mt-4"
+              onClick={() => addItemToCart(p.id)}
+            >
+              Add to Cart
+            </button>
           </article>
         ))}
       </main>

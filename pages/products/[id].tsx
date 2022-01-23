@@ -12,10 +12,12 @@ export default function ProductPage({
   product: ProductPageProps;
 }) {
   return (
-    <div className="text-left p-4">
-      <h1 className="text-3xl font-bold">{name}</h1>
+    <div className="text-left p-4 max-w-3xl">
+      <h1 className="text-2xl font-bold flex justify-between mb-4">
+        <span>{name}</span>
+        <span>${price / 100}</span>
+      </h1>
       <p>{description}</p>
-      <p>${price / 100}</p>
       <p>{content}</p>
     </div>
   );
