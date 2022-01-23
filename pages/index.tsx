@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import useCart from '../hooks/useCart';
+import { useCart } from '../hooks/useCart';
 import getAllProducts from '../lib/getAllProducts';
 
 export interface ProductData {
@@ -36,7 +36,7 @@ export default function Home({ products }: { products: ProductData[] }) {
             <button
               type="button"
               className="border p-1 rounded mt-4"
-              onClick={() => addItemToCart(p.id)}
+              onClick={() => addItemToCart({ id: p.id, qty: 1 })}
             >
               Add to Cart
             </button>
