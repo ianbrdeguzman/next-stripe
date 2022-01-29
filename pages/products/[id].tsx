@@ -42,7 +42,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params?.id;
-  console.log(id);
 
   const products = await getAllProducts();
 
