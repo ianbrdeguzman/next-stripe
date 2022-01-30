@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 
-interface Item {
+export interface Item {
   id: string;
   qty: number;
 }
@@ -10,13 +10,15 @@ interface Cart {
   addItemToCart: ({ id, qty }: Item) => void;
   minusItemOnCart: ({ id, qty }: Item) => void;
   removeItemFromCart: (id: string) => void;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<Cart>({
   cart: [],
   addItemToCart: () => {},
   minusItemOnCart: () => {},
-  removeItemFromCart: () => {}
+  removeItemFromCart: () => {},
+  clearCart: () => {}
 });
 
 interface CartProviderProps {
@@ -66,9 +68,20 @@ export function CartProvider({ children }: CartProviderProps) {
     setCart(newCart);
   }
 
+  function clearCart() {
+    setCart([]);
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
   return (
     <CartContext.Provider
-      value={{ cart, addItemToCart, minusItemOnCart, removeItemFromCart }}
+      value={{
+        cart,
+        addItemToCart,
+        minusItemOnCart,
+        removeItemFromCart,
+        clearCart
+      }}
     >
       {children}
     </CartContext.Provider>
