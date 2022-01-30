@@ -1,5 +1,6 @@
 import { GetStaticPropsContext } from 'next';
 import { ProductData } from '..';
+import { useCart } from '../../hooks/useCart';
 import getAllProducts from '../../lib/getAllProducts';
 
 interface ProductPageProps extends ProductData {
@@ -7,10 +8,12 @@ interface ProductPageProps extends ProductData {
 }
 
 export default function ProductPage({
-  product: { name, description, price, content }
+  product: { id, name, description, price, content }
 }: {
   product: ProductPageProps;
 }) {
+  const { addItemToCart } = useCart();
+
   return (
     <div className="text-left p-4 max-w-3xl">
       <h1 className="text-2xl font-bold flex justify-between mb-4">
@@ -19,6 +22,15 @@ export default function ProductPage({
       </h1>
       <p>{description}</p>
       <p>{content}</p>
+      <div className="text-right">
+        <button
+          type="button"
+          className="border p-1 rounded mt-4"
+          onClick={() => addItemToCart({ id: id, qty: 1 })}
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }
@@ -42,7 +54,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params?.id;
-  console.log(id);
 
   const products = await getAllProducts();
 
